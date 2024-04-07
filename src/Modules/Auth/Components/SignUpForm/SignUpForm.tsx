@@ -7,6 +7,7 @@ import { shakeAnimation } from '../../../../UI/framerAnimations';
 import styles from './SignUpForm.module.css'; // Предполагается, что у вас есть стили для формы регистрации
 import { useAppDispatch } from '../../../../utils/hooks/redux';// Замените на ваш собственный action для регистрации
 import { useNavigate } from 'react-router-dom';
+import { register } from '../../redux/auth.slice';
 
 // Определение интерфейса для значений формы
 interface RegistrationFormValues {
@@ -36,17 +37,21 @@ export function SignUpForm() {
   };
 
   const handleSubmit = (values: RegistrationFormValues) => {
-    // dispatch(
-    //   register({
-    //     ...values,
-    //     navigate: navigate,
-    //   })
-    // );
+    dispatch(
+      register({
+        email: values.email,
+        password: values.password,
+        phone: values.phoneNumber,
+        login: values.username,
+        navigate: navigate,
+
+      })
+    );
   };
 
   return (
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-      {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
+      {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
         <motion.div
           initial={{ scale: 0.5 }}
           animate={{ scale: 1 }}

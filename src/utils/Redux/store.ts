@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import authSlice from '../../Modules/Auth/redux/auth.slice'
 import { loadFromLocalStorage, localStorageMiddleware } from './middleWares'
+import usersSlice from '../../Modules/Users/redux/users.slice'
 
 
 export const globalInitialStates = {
@@ -8,7 +9,7 @@ export const globalInitialStates = {
 }
 export const appReducer = combineReducers({
     [authSlice.name]: authSlice.reducer,
-   
+    [usersSlice.name]: usersSlice.reducer,
 })
 
 const rootReducer = (state: any, action: any) => {

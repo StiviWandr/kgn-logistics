@@ -8,7 +8,7 @@ export namespace API {
             export const privateApi: AxiosInstance = axios.create({
                 baseURL: CONFIG.APP_API_URL,
                 headers: { 'Content-Type': 'application/json' },
-                withCredentials: true,
+                withCredentials: false,
             })
 
             privateApi.interceptors.request.use(

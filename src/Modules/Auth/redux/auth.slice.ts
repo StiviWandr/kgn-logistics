@@ -1,3 +1,4 @@
+
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 // import api from '../../../configs/api/api'
 
@@ -52,7 +53,13 @@ export interface LoginPayload {
     navigate: NavigateFunction
     stayLogged: boolean
 }
-
+export interface RegisterPayload {
+    login: string
+    password: string
+    navigate: NavigateFunction
+    email: string
+    phone: string
+}
 interface AuthResponse {
     access_token: string
     refresh_token: string
@@ -60,7 +67,7 @@ interface AuthResponse {
 
 export const hasAccess = createAsyncThunk('auth/hasAccess', async (_, { dispatch }) => {
     try {
-        const response = await API.CRM.PROTECTED.get('/auth/access')
+        const response = await API.CRM.PROTECTED.get('/access')
         dispatch(setUserData(response.data))
         dispatch(setAccess(true))
     } catch (e: any) {
@@ -94,7 +101,35 @@ export const login = createAsyncThunk(
 
             dispatch(setAccess(true))
             navigate('/', { replace: true })
-            dispatch(hasAccess())
+            dispatch(reset())
+        } catch (e: any) {
+            
+        }
+    }
+)
+export const register = createAsyncThunk(
+    'auth/register',
+    async ({ login, password, email, phone, navigate }: RegisterPayload, { dispatch }) => {
+        try {
+            dispatch(setError(false))
+            dispatch(setMessage(''))
+            dispatch(setLoading(true))
+
+            const {
+                data: { access_token, refresh_token },
+            }: AxiosResponse<AuthResponse> = await API.CRM.PUBLIC.post('/register', { Username: login,
+                Password: password,
+                PhoneNumber: phone,
+                Email: email 
+            })
+
+            localStorage.setItem('access_token', access_token)
+            localStorage.setItem('refresh_token', refresh_token)
+
+            dispatch(setAccessToken(access_token))
+            dispatch(setRefreshToken(refresh_token))
+
+            navigate('/users', { replace: true })
             dispatch(reset())
         } catch (e: any) {
             
@@ -154,17 +189,7 @@ export const authSlice = createSlice({
             state.userData = action.payload
         },
     },
-    extraReducers: builder => {
-        builder.addCase(hasAccess.pending, state => {
-            state.loading = true
-        })
-        builder.addCase(hasAccess.rejected, state => {
-            state.loading = false
-        })
-        builder.addCase(hasAccess.fulfilled, state => {
-            state.loading = false
-        })
-    },
+    
 })
 
 export const {
