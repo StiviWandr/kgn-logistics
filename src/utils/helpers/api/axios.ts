@@ -35,7 +35,7 @@ export namespace API {
                         try {
                             const {
                                 data: { access_token },
-                            }: AxiosResponse<IRefreshResponse> = await axios.get(`${CONFIG.APP_API_URL}refresh`, {withCredentials: true})
+                            }: AxiosResponse<IRefreshResponse> = await axios.post(`${CONFIG.APP_API_URL}refresh`, {}, {withCredentials: true})
 
                             localStorage.setItem('access_token', access_token)
 
