@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet'
 import { CONFIG } from '../utils/helpers/config/env'
 
-
 type Props = {
     title: string
     children?: any

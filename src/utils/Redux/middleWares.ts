@@ -2,13 +2,10 @@ import { Middleware } from '@reduxjs/toolkit'
 
 import { globalInitialStates } from './store'
 
-export const localStorageMiddleware: Middleware =
-    () =>
-    next =>
-    action => {
-        const result = next(action)
-        return result
-    }
+export const localStorageMiddleware: Middleware = () => next => action => {
+    const result = next(action)
+    return result
+}
 
 export const loadFromLocalStorage: any = () => {
     // Загрузка данных
@@ -25,6 +22,6 @@ export const loadFromLocalStorage: any = () => {
             refresh_token: refreshTokenData,
         }
     }
-    
+
     return state
 }

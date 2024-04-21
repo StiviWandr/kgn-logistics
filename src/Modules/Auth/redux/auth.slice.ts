@@ -1,4 +1,3 @@
-
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 // import api from '../../../configs/api/api'
 
@@ -59,6 +58,7 @@ export interface RegisterPayload {
     navigate: NavigateFunction
     email: string
     phone: string
+    cargo_number: string
 }
 interface AuthResponse {
     access_token: string
@@ -67,8 +67,14 @@ interface AuthResponse {
 
 export const hasAccess = createAsyncThunk('auth/hasAccess', async (_, { dispatch }) => {
     try {
-        const response = await API.CRM.PROTECTED.get('/access')
-        dispatch(setUserData(response.data))
+        // const response = await API.CRM.PROTECTED.get('/access')
+        // dispatch(setUserData(response.data))
+        const userToken = localStorage.getItem('access_token')
+        dispatch(setAccessToken(userToken || ''))
+        if (!userToken) {
+            dispatch(setAccess(false))
+            return
+        }
         dispatch(setAccess(true))
     } catch (e: any) {
         dispatch(setUserData(null))
@@ -86,7 +92,7 @@ export const login = createAsyncThunk(
 
             const {
                 data: { access_token, refresh_token },
-            }: AxiosResponse<AuthResponse> = await API.CRM.PUBLIC.post('/auth/signin', { login, password })
+            }: AxiosResponse<AuthResponse> = await API.CRM.PUBLIC.post('/login', { login, password })
 
             localStorage.setItem('access_token', access_token)
             localStorage.setItem('refresh_token', refresh_token)
@@ -102,14 +108,12 @@ export const login = createAsyncThunk(
             dispatch(setAccess(true))
             navigate('/', { replace: true })
             dispatch(reset())
-        } catch (e: any) {
-            
-        }
+        } catch (e: any) {}
     }
 )
 export const register = createAsyncThunk(
     'auth/register',
-    async ({ login, password, email, phone, navigate }: RegisterPayload, { dispatch }) => {
+    async ({ login, password, email, phone, navigate, cargo_number }: RegisterPayload, { dispatch }) => {
         try {
             dispatch(setError(false))
             dispatch(setMessage(''))
@@ -117,10 +121,12 @@ export const register = createAsyncThunk(
 
             const {
                 data: { access_token, refresh_token },
-            }: AxiosResponse<AuthResponse> = await API.CRM.PUBLIC.post('/register', { Username: login,
-                Password: password,
-                PhoneNumber: phone,
-                Email: email 
+            }: AxiosResponse<AuthResponse> = await API.CRM.PUBLIC.post('/register', {
+                username: login,
+                password: password,
+                email: email,
+                phone_number: phone,
+                cargo_number: cargo_number,
             })
 
             localStorage.setItem('access_token', access_token)
@@ -131,9 +137,7 @@ export const register = createAsyncThunk(
 
             navigate('/users', { replace: true })
             dispatch(reset())
-        } catch (e: any) {
-            
-        }
+        } catch (e: any) {}
     }
 )
 
@@ -189,7 +193,6 @@ export const authSlice = createSlice({
             state.userData = action.payload
         },
     },
-    
 })
 
 export const {

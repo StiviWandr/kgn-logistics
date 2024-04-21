@@ -3,7 +3,6 @@ import authSlice from '../../Modules/Auth/redux/auth.slice'
 import { loadFromLocalStorage, localStorageMiddleware } from './middleWares'
 import usersSlice from '../../Modules/Users/redux/users.slice'
 
-
 export const globalInitialStates = {
     [authSlice.name]: authSlice.getInitialState(),
 }

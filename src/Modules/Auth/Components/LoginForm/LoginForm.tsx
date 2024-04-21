@@ -121,7 +121,7 @@ export function LoginForm() {
                                     </Checkbox>
                                 </Form.Item> */}
                                 <Form.Item className={styles.signin_btn}>
-                                    <Button size="large" type="primary" htmlType="submit" block loading={loading}>
+                                    <Button size="large" type="primary" htmlType="submit" block>
                                         Войти
                                     </Button>
                                 </Form.Item>

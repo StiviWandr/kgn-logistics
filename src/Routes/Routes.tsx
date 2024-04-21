@@ -1,4 +1,4 @@
-import { Route, Routes as Routers} from 'react-router-dom'
+import { Route, Routes as Routers } from 'react-router-dom'
 import { ProtectedRoute } from './ProtectedRoute/ProtectedRoute'
 import { useAppDispatch, useAppSelector } from '../utils/hooks/redux'
 import { useEffect, useState } from 'react'

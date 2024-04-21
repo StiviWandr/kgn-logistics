@@ -1,4 +1,3 @@
-
 import UsersModule from '../../Modules/Users/UsersModule'
 import PageHead from '../../Routes/PageHead'
 
