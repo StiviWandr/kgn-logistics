@@ -125,6 +125,15 @@ export function LoginForm() {
                                         Войти
                                     </Button>
                                 </Form.Item>
+                                <Typography.Text>
+                                    <Flex justify='space-between' align='center'>
+                                        Нет аккаунта?{' '}
+                                        <Button type="link" onClick={() => navigate('/signup')}>
+                                            Зарегистрируйтесь
+                                        </Button>
+                                    </Flex>
+                                    
+                                </Typography.Text>
                             </Flex>
                         </Form>
                     </motion.div>

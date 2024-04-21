@@ -9,7 +9,7 @@ import AppLayout from './Layout/Layout'
 
 export function Routes() {
     const [isLoaded, setIsLoaded] = useState(false)
-    const { access } = useAppSelector(state => state.auth)
+    const { access, access_token } = useAppSelector(state => state.auth)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export function Routes() {
             setIsLoaded(true)
         }
         fetchData()
-    }, [dispatch])
+    }, [dispatch, access_token])
     if (!isLoaded) return <Spin fullscreen />
     return (
         <>

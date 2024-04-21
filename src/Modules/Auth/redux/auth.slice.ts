@@ -120,7 +120,7 @@ export const register = createAsyncThunk(
             dispatch(setLoading(true))
 
             const {
-                data: { access_token, refresh_token },
+                data: { access_token },
             }: AxiosResponse<AuthResponse> = await API.CRM.PUBLIC.post('/register', {
                 username: login,
                 password: password,
@@ -130,12 +130,8 @@ export const register = createAsyncThunk(
             })
 
             localStorage.setItem('access_token', access_token)
-            localStorage.setItem('refresh_token', refresh_token)
-
             dispatch(setAccessToken(access_token))
-            dispatch(setRefreshToken(refresh_token))
-
-            navigate('/users', { replace: true })
+            navigate('/', { replace: true })
             dispatch(reset())
         } catch (e: any) {}
     }

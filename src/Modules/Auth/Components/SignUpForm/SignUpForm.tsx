@@ -141,6 +141,15 @@ export function SignUpForm() {
                                     Зарегистрироваться
                                 </Button>
                             </Form.Item>
+                            <Typography.Text>
+                                <Flex justify='space-between' align='center'>
+                                    Есть аккаунт?{' '}
+                                    <Button type="link" onClick={() => navigate('/signin')}>
+                                        Войти
+                                    </Button>
+                                </Flex>
+                                
+                            </Typography.Text>
                         </Flex>
                     </Form>
                 </motion.div>
