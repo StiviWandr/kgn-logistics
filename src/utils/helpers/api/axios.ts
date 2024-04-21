@@ -7,8 +7,7 @@ export namespace API {
         export namespace AXIOS {
             export const privateApi: AxiosInstance = axios.create({
                 baseURL: CONFIG.APP_API_URL,
-                headers: { 'Content-Type': 'application/json' },
-                withCredentials: false,
+                withCredentials: true,
             })
 
             privateApi.interceptors.request.use(
@@ -34,10 +33,9 @@ export namespace API {
                         originalRequest._retry = true
 
                         try {
-                            const refreshToken = localStorage.getItem('refresh_token')
                             const {
                                 data: { access_token },
-                            }: AxiosResponse<IRefreshResponse> = await publicApi.post('/auth/refresh', { refreshToken })
+                            }: AxiosResponse<IRefreshResponse> = await axios.get(`${CONFIG.APP_API_URL}refresh`, {withCredentials: true})
 
                             localStorage.setItem('access_token', access_token)
 
@@ -54,6 +52,7 @@ export namespace API {
 
             export const publicApi: AxiosInstance = axios.create({
                 baseURL: CONFIG.APP_API_URL,
+                withCredentials: true,
             })
         }
         export const PROTECTED = AXIOS.privateApi

@@ -1,3 +1,4 @@
 import { SignInPage } from './SignInPage/SignInPage'
 import { UsersPage } from './UsersPage/UsersPage'
-export { SignInPage, UsersPage }
+import { ShipmentPage } from './ShipmentPage/ShipmentPage'
+export { SignInPage, UsersPage, ShipmentPage }

@@ -92,7 +92,7 @@ export const login = createAsyncThunk(
 
             const {
                 data: { access_token, refresh_token },
-            }: AxiosResponse<AuthResponse> = await API.CRM.PUBLIC.post('/login', { login, password })
+            }: AxiosResponse<AuthResponse> = await API.CRM.PUBLIC.post('/login', { username: login, password })
 
             localStorage.setItem('access_token', access_token)
             localStorage.setItem('refresh_token', refresh_token)

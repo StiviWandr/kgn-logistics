@@ -1,5 +1,5 @@
 import { SignUp } from '../Modules/Auth/SignUp/SignUp'
-import { SignInPage, UsersPage } from '../Pages'
+import { ShipmentPage, SignInPage, UsersPage } from '../Pages'
 import { HomePage } from '../Pages/HomePage/HomePage'
 
 interface RouteType {
@@ -28,6 +28,14 @@ const layoutRoutes: RouteType[] = [
         ifNotAllowedPath: '/signin',
         element: <HomePage />,
         title: 'Главная',
+    },
+    {
+        path: '/shipment',
+        protected: true,
+        canUseRouteIf: '!!access',
+        ifNotAllowedPath: '/signin',
+        element: <ShipmentPage />,
+        title: 'Погрузка',
     },
 ]
 const noLayoutRoutes: RouteType[] = [
