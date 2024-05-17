@@ -2,7 +2,7 @@ import { useState } from 'react';
 import UsersModule from '../../Modules/Users/UsersModule'
 import PageHead from '../../Routes/PageHead'
 import { API } from '../../utils/helpers/api/axios';
-import { Button, Card, Input, message } from 'antd';
+import { Button, Card, Input, Typography, message } from 'antd';
 
 export function UnloadingPage() {
         const [phoneNumber, setPhoneNumber] = useState('');
@@ -19,11 +19,13 @@ export function UnloadingPage() {
             }
         };
     
-        const handleSendSMS = async (recipient: any) => {
+        const handleSendSMS = async (recipient: any, shipmentId: number) => {
             try {
                 await API.CRM.PROTECTED.post('/send_sms', {
-                    recipient
+                    recipient,
+                    shipmentId: shipmentId
                 });
+                handleSearch()
                 message.success('СМС отправлено успешно');
             } catch (error) {
                 message.error('Ошибка при отправке СМС');
@@ -42,6 +44,7 @@ export function UnloadingPage() {
                 />
                 {results.map((item: any, index) => (
                     <Card key={index} title={`Товар: ${item.cargo_description}`} style={{ marginTop: '20px' }}>
+                        <Typography.Text type='success'>Количество отправленных СМС: {item.sms_sent_counter}</Typography.Text>
                         <p>Телефон: {item.phone_number}</p>
                         <p>Описание груза: {item.cargo_description}</p>
                         <p>Количество чеков: {item.check_number}</p>
@@ -50,7 +53,7 @@ export function UnloadingPage() {
                         <p>Дата заполнения: {item.fill_date}</p>
                         <p>Водитель: {item.driver_username}</p>
                         <p>Номер фуры: {item.car_number}</p>
-                        <Button style={{backgroundColor: 'green'}} type="primary" onClick={() => handleSendSMS(item.phone_number)}>
+                        <Button style={{backgroundColor: 'green'}} type="primary" onClick={() => handleSendSMS(item.phone_number, item.id)}>
                             Отправить СМС
                         </Button>
                     </Card>
