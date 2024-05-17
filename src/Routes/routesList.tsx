@@ -1,6 +1,7 @@
 import { SignUp } from '../Modules/Auth/SignUp/SignUp'
 import { ShipmentPage, SignInPage, UsersPage } from '../Pages'
 import { HomePage } from '../Pages/HomePage/HomePage'
+import { UnloadingPage } from '../Pages/UnloadingPage/UnloadingPage'
 
 interface RouteType {
     path: string
@@ -36,6 +37,14 @@ const layoutRoutes: RouteType[] = [
         ifNotAllowedPath: '/signin',
         element: <ShipmentPage />,
         title: 'Погрузка',
+    },
+    {
+        path: '/unloading',
+        protected: true,
+        canUseRouteIf: '!!access',
+        ifNotAllowedPath: '/signin',
+        element: <UnloadingPage />,
+        title: 'Выгрузка',
     },
 ]
 const noLayoutRoutes: RouteType[] = [

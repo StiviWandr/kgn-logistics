@@ -4,27 +4,28 @@ import axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { API } from '../../utils/helpers/api/axios';
+import { useAppSelector } from '../../utils/hooks/redux';
 
 export function ShipmentPage () {
     const [qrImage, setQrImage] = useState('');
+    const {userData} = useAppSelector(state => state.auth)
     const truck_type_options = [
         { value: 'Голова', label: 'Голова' },
         { value: 'Прицеп', label: 'Прицеп' },
     ]
     const initialValues = {
         phone_number: '',
-        cargo_number: '',
+        cargo_col: '',
         cargo_description: '',
         check_number: '',
         truck_type: '',
     };
 
     const validationSchema = Yup.object().shape({
-        phone_number: Yup.string().required('Телефонный номер обязателен'),
-        cargo_number: Yup.string().required('Количество груза обязательно'),
         cargo_description: Yup.string().required('Описание груза обязательно'),
         check_number: Yup.string().required('Количество чеков обязательно'),
         truck_type: Yup.string().required('Тип кузова обязателен'),
+        cargo_col: Yup.string().required('Количество груза обязательно'),
     });
 
     const handleSubmit = async (values: typeof initialValues, { setSubmitting }: any) => {
@@ -58,7 +59,7 @@ export function ShipmentPage () {
                 {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, setFieldValue }) => (
                     <Form onFinish={handleSubmit}>
                         <Flex gap={10} vertical>
-                            <Form.Item
+                            {/* <Form.Item
                                 label="Телефонный номер"
                                 help={touched.phone_number && errors.phone_number}
                                 labelCol={{ span: 24 }}
@@ -72,19 +73,19 @@ export function ShipmentPage () {
                                     value={values.phone_number} 
                                     placeholder='Например, +77775553535'
                                 />
-                            </Form.Item>
+                            </Form.Item> */}
                             <Form.Item
                                 label="Количество мест"
-                                help={touched.cargo_number && errors.cargo_number}
+                                help={touched.cargo_col && errors.cargo_col}
                                 labelCol={{ span: 24 }}
-                                validateStatus={touched.cargo_number && errors.cargo_number ? 'error' : ''}
+                                validateStatus={touched.cargo_col && errors.cargo_col ? 'error' : ''}
                             >
                                 <Input 
                                     size='large' 
-                                    name="cargo_number" 
+                                    name="cargo_col" 
                                     onChange={handleChange} 
                                     onBlur={handleBlur} 
-                                    value={values.cargo_number} 
+                                    value={values.cargo_col} 
                                     placeholder='Например, 15'
                                 />
                             </Form.Item>
@@ -104,21 +105,6 @@ export function ShipmentPage () {
                                 />
                             </Form.Item>
                             <Form.Item
-                                label="Количество чеков"
-                                help={touched.check_number && errors.check_number}
-                                labelCol={{ span: 24 }}
-                                validateStatus={touched.check_number && errors.check_number ? 'error' : ''}
-                            >
-                                <Input 
-                                    size='large' 
-                                    name="check_number" 
-                                    onChange={handleChange} 
-                                    onBlur={handleBlur} 
-                                    value={values.check_number} 
-                                    placeholder='Например, 3'
-                                />
-                            </Form.Item>
-                            <Form.Item
                                 label="Тип кузова"
                                 help={touched.truck_type && errors.truck_type}
                                 validateStatus={touched.truck_type && errors.truck_type ? 'error' : ''}
@@ -134,6 +120,51 @@ export function ShipmentPage () {
                                 />
                     
                                 
+                            </Form.Item>
+                            <Form.Item
+                                label="Количество чеков"
+                                help={touched.check_number && errors.check_number}
+                                labelCol={{ span: 24 }}
+                                validateStatus={touched.check_number && errors.check_number ? 'error' : ''}
+                            >
+                                <Input 
+                                    size='large' 
+                                    name="check_number" 
+                                    onChange={handleChange} 
+                                    onBlur={handleBlur} 
+                                    value={values.check_number} 
+                                    placeholder='Например, 3'
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                label="Имя"
+                                labelCol={{ span: 24 }}
+                            >
+                                <Input 
+                                    size='large' 
+                                    disabled
+                                    value={userData?.username} 
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                label="Номер телефона"
+                                labelCol={{ span: 24 }}
+                            >
+                                <Input 
+                                    size='large' 
+                                    disabled
+                                    value={userData?.phone_number} 
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                label="Номер машины"
+                                labelCol={{ span: 24 }}
+                            >
+                                <Input 
+                                    size='large' 
+                                    disabled
+                                    value={userData?.cargo_number} 
+                                />
                             </Form.Item>
                             <Form.Item>
                                 <Button type="primary" htmlType="submit" loading={isSubmitting}>

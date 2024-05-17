@@ -5,11 +5,10 @@ import { NavigateFunction } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 import { API } from '../../../utils/helpers/api/axios'
 interface IUserData {
-    first_name: string | null
-    last_name: string | null
-    middle_name: string | null
-    it: null | boolean
-    name_prefix: string | null
+    email: string
+    phone_number: string
+    cargo_number: string
+    username: string
 }
 interface IUserSliceState {
     loading: boolean
@@ -67,14 +66,8 @@ interface AuthResponse {
 
 export const hasAccess = createAsyncThunk('auth/hasAccess', async (_, { dispatch }) => {
     try {
-        // const response = await API.CRM.PROTECTED.get('/access')
-        // dispatch(setUserData(response.data))
-        const userToken = localStorage.getItem('access_token')
-        dispatch(setAccessToken(userToken || ''))
-        if (!userToken) {
-            dispatch(setAccess(false))
-            return
-        }
+        const response = await API.CRM.PROTECTED.get('/access')
+        dispatch(setUserData(response.data))
         dispatch(setAccess(true))
     } catch (e: any) {
         dispatch(setUserData(null))

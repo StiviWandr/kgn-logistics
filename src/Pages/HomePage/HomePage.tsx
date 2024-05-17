@@ -8,7 +8,7 @@ export function HomePage() {
             <Flex style={{ minHeight: '100%', minWidth: '100%' }} align="center" justify="center">
                 <Flex gap={200} vertical style={{width: '100%'}}>
                     <Button style={{height: 200, fontSize: 50}} size="large" block onClick={()=>navigate('/shipment')}>Погрузка</Button>
-                    <Button style={{height: 200, fontSize: 50}} size="large" block onClick={()=>navigate('/shipment')}>Выгрузка</Button>
+                    <Button style={{height: 200, fontSize: 50}} size="large" block onClick={()=>navigate('/unloading')}>Выгрузка</Button>
                 </Flex>
             </Flex>
         </>
