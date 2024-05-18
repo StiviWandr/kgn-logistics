@@ -45,15 +45,17 @@ export function UnloadingPage() {
                 {results.map((item: any, index) => (
                     <Card key={index} title={`Товар: ${item.cargo_description}`} style={{ marginTop: '20px' }}>
                         <Typography.Text type='success'>Количество отправленных СМС: {item.sms_sent_counter}</Typography.Text>
-                        <p>Телефон: {item.phone_number}</p>
+                        <p>ФИО получателя: {item.recipient_name}</p>
+                        <p>Телефон получателя: {item.recipient_phone_number}</p>
                         <p>Описание груза: {item.cargo_description}</p>
                         <p>Количество чеков: {item.check_number}</p>
                         <p>Тип кузова: {item.truck_type}</p>
                         <p>Количество груза: {item.cargo_col}</p>
                         <p>Дата заполнения: {item.fill_date}</p>
-                        <p>Водитель: {item.driver_username}</p>
+                        <p>ФИО водителя: {item.driver_username}</p>
+                        <p>Номер телефона водителя: {item.driver_phone_number}</p>
                         <p>Номер фуры: {item.car_number}</p>
-                        <Button style={{backgroundColor: 'green'}} type="primary" onClick={() => handleSendSMS(item.phone_number, item.id)}>
+                        <Button style={{backgroundColor: 'green'}} type="primary" onClick={() => handleSendSMS(item.recipient_phone_number, item.id)}>
                             Отправить СМС
                         </Button>
                     </Card>

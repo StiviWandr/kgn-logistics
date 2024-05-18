@@ -14,14 +14,17 @@ export function ShipmentPage () {
         { value: 'Прицеп', label: 'Прицеп' },
     ]
     const initialValues = {
-        phone_number: '',
+        recipient_phone_number: '',
         cargo_col: '',
         cargo_description: '',
         check_number: '',
+        recipient_name: '',
         truck_type: '',
     };
 
     const validationSchema = Yup.object().shape({
+        recipient_phone_number: Yup.string().required('Телефонный номер обязателен'),
+        recipient_name: Yup.string().required('Имя получателя обязательно'),
         cargo_description: Yup.string().required('Описание груза обязательно'),
         check_number: Yup.string().required('Количество чеков обязательно'),
         truck_type: Yup.string().required('Тип кузова обязателен'),
@@ -59,21 +62,36 @@ export function ShipmentPage () {
                 {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, setFieldValue }) => (
                     <Form onFinish={handleSubmit}>
                         <Flex gap={10} vertical>
-                            {/* <Form.Item
-                                label="Телефонный номер"
-                                help={touched.phone_number && errors.phone_number}
+                            <Form.Item
+                                label="Телефонный номер получателя"
+                                help={touched.recipient_phone_number && errors.recipient_phone_number}
                                 labelCol={{ span: 24 }}
-                                validateStatus={touched.phone_number && errors.phone_number ? 'error' : ''}
+                                validateStatus={touched.recipient_phone_number && errors.recipient_phone_number ? 'error' : ''}
                             >
                                 <Input 
                                     size='large' 
-                                    name="phone_number" 
+                                    name="recipient_phone_number" 
                                     onChange={handleChange} 
                                     onBlur={handleBlur} 
-                                    value={values.phone_number} 
+                                    value={values.recipient_phone_number} 
                                     placeholder='Например, +77775553535'
                                 />
-                            </Form.Item> */}
+                            </Form.Item>
+                            <Form.Item
+                                label="ФИО получателя"
+                                help={touched.recipient_name && errors.recipient_name}
+                                labelCol={{ span: 24 }}
+                                validateStatus={touched.recipient_name && errors.recipient_name ? 'error' : ''}
+                            >
+                                <Input 
+                                    size='large' 
+                                    name="recipient_name" 
+                                    onChange={handleChange} 
+                                    onBlur={handleBlur} 
+                                    value={values.recipient_name} 
+                                    placeholder='Например, Иванов Иван Иванович'
+                                />
+                            </Form.Item>
                             <Form.Item
                                 label="Количество мест"
                                 help={touched.cargo_col && errors.cargo_col}
